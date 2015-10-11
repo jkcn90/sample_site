@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="cache-control" content="no-cache" />
+    <title>Sample Chat Site</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/custom.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/animate.min.css') }}">
+</head>
+<body>
+    <div class="stats-bar text-center"></div>
+    <div class="autocomplete-bar text-center"></div>
+
+    <div class="container">
+        <div class="splash">
+            <div class="overlay">
+                <h1>Sample Chat Site</h1>
+                <form class="form-inline join-chat" role="form">
+                    <div class="input-group input-group-lg">
+                        <input name="username" type="text" class="form-control input-lg" placeholder="please enter your user name" required>
+                        <span class="input-group-btn">
+                            <button class="btn btn-success" type="submit button">Login</button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="messages-wrapper">
+            <ul class="messages list-group reverseOrder">
+                <li class="list-group-item child">
+                    <strong>Welcome</strong>
+                </li>
+            </ul>
+        </div>
+
+        <div class="chat-panel panel panel-default">
+            <div class="panel-body">
+                <form class="compose-message-form" role="form">
+                    <div class="form-group">
+                        <textarea id="autocomplete" placeholder="your message goes here" name="message" for="tags" class="form-control" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <p class="text-center">Enter to send / Ctrl+Enter for a new line</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.1.0/moment.min.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename='scripts/vendor/md5.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/vendor/socket.io.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/vendor/handlebars.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/sample_site.js') }}"></script>
+
+    {% raw %}
+
+    <script id="template-chat-message" type="text/template">
+        <li class="list-group-item child">
+            <div class="chat-message-wrapper animated fadeIn">
+                <span class="label {{labelClass}}">{{author}} says</span>
+                    <p>{{message}}</p>
+            </div>
+                    <span class="time">{{time}}</span>
+        </li>
+    </script>
+
+    <script id="template-stats-bar" type="text/template">
+        <span class="text-muted">Who's online?</span>
+        <span class="text-muted">
+            {{# each people}} <p>{{username}}</p> {{/each}}
+        </span>
+    </script>
+
+    <script id="template-autocomplete-bar" type="text/template">
+        <span class="text-muted">Related Text</span>
+        <span class="text-muted">
+            {{# each word_completions}} <p>{{completion}}</p> {{/each}}
+        </span>
+        <span class="text-muted">
+            {{# each sentence_completions}} <p>{{completion}}</p> {{/each}}
+        </span>
+    </script>
+
+    {% endraw %}
+
+</body>
+</html>
