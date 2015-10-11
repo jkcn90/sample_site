@@ -1,0 +1,3 @@
+[submodule "sample_parser"]
+	path = sample_parser
+	url = https://github.com/jkcn90/sample_parser
