@@ -87,9 +87,9 @@ def get_tasks():
     word_completions = word_tree.get_completions(query)
     output['word_completions'] = word_completions
 
-    if query in words:
-        sentence_completions = sentence_tree.get_completions([query])
-        sentence_completions = [' '.join(sentence)
-                                for sentence in sentence_completions]
-        output['sentence_completions'] = sentence_completions
+    sentence_completions = sentence_tree.get_completions([query])
+    sentence_completions = [' '.join(sentence)
+                            for sentence in sentence_completions]
+    output['sentence_completions'] = sentence_completions
+    output['query'] = query
     return jsonify(output)
