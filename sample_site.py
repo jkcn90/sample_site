@@ -6,7 +6,7 @@ from socketio.namespace import BaseNamespace
 from flask import Flask, Response, render_template, request, jsonify
 
 from sample_parser.parse import word_tree, words, messages
-from sample_parser.parse import message_predictions, lsa, km, vectorizer
+from sample_parser.parse import message_predictions, km, vectorizer
 
 monkey.patch_all()
 
@@ -91,7 +91,6 @@ def get_tasks():
 
     if len(query) > 2:
         test_sentence = vectorizer.transform([query])
-        test_sentence = lsa.transform(test_sentence)
         test_sentence_prediction = km.predict(test_sentence)
         similar_messages = [message for i, message in enumerate(messages)
                             if message_predictions[i] == test_sentence_prediction]
