@@ -114,7 +114,7 @@ label.error {
   -moz-transform : translate(1000%,0);
   position: fixed;
   width: 100%;
-  bottom: 0;
+  bottom: 100px;
   margin-bottom: 0;
 }
 
@@ -201,7 +201,7 @@ label.error {
   color: #e7e7e7;
 }
 
-.autocomplete-bar {
+.autosuggest-bar {
   position: absolute;
   right: 1070px;
   top: 100px;
@@ -211,7 +211,7 @@ label.error {
   -moz-transform : translate(0,-100%);
 }
 
-.autocomplete-bar {
+.autosuggest-bar {
   background-color: #373b44;
   border-color: #373b44;
 }

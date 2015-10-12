@@ -93,7 +93,8 @@
                         $(".messages-wrapper").addClass("animated slideInLeft");
                         $(".splash").addClass("animated fadeOutUp");
                         $(".stats-bar").addClass("animated fadeInRight");
-                        $(".autocomplete-bar").addClass("animated fadeInLeft");
+                        $(".autosuggest-bar").addClass("animated fadeInLeft");
+                        $("#autosuggest").attr("autofocus", true);
                     }
                 });
             },
@@ -147,27 +148,24 @@
 
     };
 
-    var autocomplete = function() {
-        $(" #autocomplete" ).keyup(function( event ) {
+    var autosuggest = function() {
+        $(" #autosuggest" ).keyup(function( event ) {
             var inputData = $('textarea[name="message"]').val();
 
             $.getJSON('/autosuggest', {
                 q: inputData,
             }, function(data) {
-                var numberOfCompletions = Math.min(10, data.word_completions.length);
-                for(var i = 0; i < numberOfCompletions; i++){
-                    data.word_completions[i] = {
-                        completion : data.word_completions[i],
-                    };
-                }
+                $("#autosuggest").autocomplete({
+                    source: data.word_completions.slice(0, 5),
+                });
 
-                numberOfCompletions = Math.min(10, data.sentence_completions.length);
+                var numberOfCompletions = Math.min(10, data.sentence_completions.length);
                 for(var i = 0; i < numberOfCompletions; i++){
                     data.sentence_completions[i] = {
                         completion : data.sentence_completions[i],
                     };
                 }
-                $(".autocomplete-bar").html(
+                $(".autosuggest-bar").html(
                     templates.autoCompleteBar(data)
                 );
             });
@@ -178,14 +176,14 @@
     var ready = function(){
         templates.chatMessage = Handlebars.compile($("#template-chat-message").html());
         templates.statsBar = Handlebars.compile($("#template-stats-bar").html());
-        templates.autoCompleteBar = Handlebars.compile($("#template-autocomplete-bar").html());
+        templates.autoCompleteBar = Handlebars.compile($("#template-autosuggest-bar").html());
 
         bindUI();
         chatAPI.connect(function(){});
-        autocomplete();
-        $("#autocomplete").blur( function(){
+        autosuggest();
+        $("#autosuggest").blur( function(){
             setTimeout(function() { 
-                $("#autocomplete").focus(); 
+                $("#autosuggest").focus(); 
             }, 50);
         });
     };

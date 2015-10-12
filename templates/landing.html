@@ -5,12 +5,13 @@
     <meta http-equiv="cache-control" content="no-cache" />
     <title>Sample Chat Site</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/custom.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/animate.min.css') }}">
 </head>
 <body>
     <div class="stats-bar text-center"></div>
-    <div class="autocomplete-bar text-center"></div>
+    <div class="autosuggest-bar text-center"></div>
 
     <div class="container">
         <div class="splash">
@@ -18,7 +19,7 @@
                 <h1>Sample Chat Site</h1>
                 <form class="form-inline join-chat" role="form">
                     <div class="input-group input-group-lg">
-                        <input name="username" type="text" class="form-control input-lg" placeholder="please enter your user name" required>
+                        <input autofocus name="username" type="text" class="form-control input-lg" placeholder="please enter your user name" required>
                         <span class="input-group-btn">
                             <button class="btn btn-success" type="submit button">Login</button>
                         </span>
@@ -39,7 +40,7 @@
             <div class="panel-body">
                 <form class="compose-message-form" role="form">
                     <div class="form-group">
-                        <textarea id="autocomplete" placeholder="your message goes here" name="message" for="tags" class="form-control" rows="3" required></textarea>
+                        <textarea id="autosuggest" placeholder="your message goes here" name="message" for="tags" class="form-control" rows="3" required></textarea>
                     </div>
                     <div class="form-group">
                         <p class="text-center">Enter to send / Ctrl+Enter for a new line</p>
@@ -50,6 +51,7 @@
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.14.0/jquery.validate.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.1.0/moment.min.js"></script>
 
@@ -79,11 +81,8 @@
         </span>
     </script>
 
-    <script id="template-autocomplete-bar" type="text/template">
+    <script id="template-autosuggest-bar" type="text/template">
         <span class="text-muted">Related Text</span>
-        <span class="text-muted">
-            {{# each word_completions}} <p>{{completion}}</p> {{/each}}
-        </span>
         <span class="text-muted">
             {{# each sentence_completions}} <p>{{completion}}</p> {{/each}}
         </span>
