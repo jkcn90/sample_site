@@ -183,6 +183,11 @@
         bindUI();
         chatAPI.connect(function(){});
         autocomplete();
+        $("#autocomplete").blur( function(){
+            setTimeout(function() { 
+                $("#autocomplete").focus(); 
+            }, 50);
+        });
     };
 
     $(function(){ ready(); });
