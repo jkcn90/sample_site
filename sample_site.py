@@ -94,10 +94,13 @@ def get_tasks():
 
     sentence_completions = sentence_tree.get_completions(query)
 
-    test_sentence = vectorizer.transform([query])
-    test_sentence_prediction = km.predict(test_sentence)
-    similar_messages = [message for i, message in enumerate(messages)
-                        if message_predictions[i] == test_sentence_prediction]
+    if len(query) > 2:
+        test_sentence = vectorizer.transform([query])
+        test_sentence_prediction = km.predict(test_sentence)
+        similar_messages = [message for i, message in enumerate(messages)
+                            if message_predictions[i] == test_sentence_prediction]
+    else:
+        similar_messages = []
 
     similar_messages = sentence_completions + similar_messages
 
