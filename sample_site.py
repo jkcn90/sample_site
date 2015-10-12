@@ -5,7 +5,7 @@ from socketio.mixins import BroadcastMixin
 from socketio.namespace import BaseNamespace
 from flask import Flask, Response, render_template, request, jsonify
 
-from sample_parser.parse import sentence_tree, word_tree, words, messages
+from sample_parser.parse import sentence_tree, word_tree, message_group
 from sample_parser.parse import message_predictions, km, vectorizer
 
 monkey.patch_all()
@@ -85,22 +85,24 @@ def get_tasks():
     output = {}
 
     query = request.args.get('q')
-    if query:
-        last_word = query.split()[-1]
+    query_words = query.split()
+    if query_words:
+        last_word = query_words[-1]
     else:
         last_word = query
     word_completions = word_tree.get_completions(last_word)
     output['words'] = word_completions
 
-    sentence_completions = sentence_tree.get_completions(query)
-
-    if len(query) > 2:
-        test_sentence = vectorizer.transform([query])
-        test_sentence_prediction = km.predict(test_sentence)
-        similar_messages = [message for i, message in enumerate(messages)
-                            if message_predictions[i] == test_sentence_prediction]
+    if last_word in sentence_tree.root_map:
+        sentence_completions = sentence_tree.get_completions(query_words)
     else:
-        similar_messages = []
+        sentence_completions = sentence_tree.get_completions(query_words[:-1])
+    sentence_completions = [' '.join(sentence)
+                            for sentence in sentence_completions]
+
+    test_sentence = vectorizer.transform([query])
+    predicted_group = km.predict(test_sentence)
+    similar_messages = message_group[predicted_group[0]]
 
     similar_messages = sentence_completions + similar_messages
 
