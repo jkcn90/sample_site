@@ -85,7 +85,10 @@ def get_tasks():
     output = {}
 
     query = request.args.get('q')
-    last_word = query.split()[-1]
+    if query:
+        last_word = query.split()[-1]
+    else:
+        last_word = query
     word_completions = word_tree.get_completions(last_word)
     output['words'] = word_completions
 
