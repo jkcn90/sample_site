@@ -12,12 +12,16 @@ ipython-genutils==0.1.0
 itsdangerous==0.23
 Jinja2==2.7.1
 MarkupSafe==0.18
+numpy==1.10.0.post2
 path.py==8.1.2
 pexpect==4.0.1
 pickleshare==0.5
 ptyprocess==0.5
+scikit-learn==0.16.1
+scipy==0.16.0
 simplegeneric==0.8.1
 six==1.10.0
+sklearn==0.0
 traitlets==4.0.0
 Werkzeug==0.9.4
 wheel==0.24.0
