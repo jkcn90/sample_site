@@ -17,7 +17,7 @@ path.py==8.1.2
 pexpect==4.0.1
 pickleshare==0.5
 ptyprocess==0.5
-scikit-learn==0.16.1
+scikit-learn==0.15.2
 scipy==0.15.1
 simplegeneric==0.8.1
 six==1.10.0
