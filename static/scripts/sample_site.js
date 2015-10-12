@@ -163,7 +163,7 @@
                     }
                 });
 
-                var numberOfCompletions = Math.min(30, data.sentence_completions.length);
+                var numberOfCompletions = Math.min(15, data.sentence_completions.length);
                 for(var i = 0; i < numberOfCompletions; i++){
                     data.sentence_completions[i] = {
                         completion : data.sentence_completions[i],

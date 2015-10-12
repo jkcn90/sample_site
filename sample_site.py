@@ -5,7 +5,7 @@ from socketio.mixins import BroadcastMixin
 from socketio.namespace import BaseNamespace
 from flask import Flask, Response, render_template, request, jsonify
 
-from sample_parser.parse import word_tree, words, messages
+from sample_parser.parse import sentence_tree, word_tree, words, messages
 from sample_parser.parse import message_predictions, km, vectorizer
 
 monkey.patch_all()
@@ -92,15 +92,16 @@ def get_tasks():
     word_completions = word_tree.get_completions(last_word)
     output['words'] = word_completions
 
-    if len(query) > 2:
-        test_sentence = vectorizer.transform([query])
-        test_sentence_prediction = km.predict(test_sentence)
-        similar_messages = [message for i, message in enumerate(messages)
-                            if message_predictions[i] == test_sentence_prediction]
+    sentence_completions = sentence_tree.get_completions(query)
 
-        output['sentence_completions'] = similar_messages
-    else:
-        output['sentence_completions'] = []
+    test_sentence = vectorizer.transform([query])
+    test_sentence_prediction = km.predict(test_sentence)
+    similar_messages = [message for i, message in enumerate(messages)
+                        if message_predictions[i] == test_sentence_prediction]
+
+    similar_messages = sentence_completions + similar_messages
+
+    output['sentence_completions'] = similar_messages
 
     output['query'] = query
     return jsonify(output)
