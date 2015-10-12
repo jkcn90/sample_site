@@ -155,11 +155,17 @@
             $.getJSON('/autosuggest', {
                 q: inputData,
             }, function(data) {
+                var numberOfCompletions = Math.min(5, data.word_completions.length);
+                var wordCompletions = data.word_completions.slice(0, numberOfCompletions);
                 $("#autosuggest").autocomplete({
-                    source: data.word_completions.slice(0, 5),
+                    source: function( request, response ) {
+                        response($.ui.autocomplete.filter(
+                            wordCompletions, request.term.split(" ").pop()
+                        ));
+                    }
                 });
 
-                var numberOfCompletions = Math.min(10, data.sentence_completions.length);
+                numberOfCompletions = Math.min(10, data.sentence_completions.length);
                 for(var i = 0; i < numberOfCompletions; i++){
                     data.sentence_completions[i] = {
                         completion : data.sentence_completions[i],
